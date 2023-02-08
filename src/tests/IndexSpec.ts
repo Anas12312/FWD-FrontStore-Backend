@@ -1,5 +1,117 @@
 import supertest from 'supertest';
+import { OrderStore } from '../models/order';
+import { ProductStore } from '../models/product';
+import { UserStore } from '../models/user';
 import app from '../server';
+
+// Models Testing
+
+// Product Model Tests
+const productStore = new ProductStore()
+
+describe("Product Model", () => {
+  it('should have an index method', () => {
+    expect(productStore.index).toBeDefined();
+  });
+  it('should have a show method', () => {
+    expect(productStore.show).toBeDefined();
+  });
+
+  it('should have a create method', () => {
+    expect(productStore.create).toBeDefined();
+  });
+
+  it('create method should add a product', async () => {
+    const result = await productStore.create({
+        name: "fridge",
+        price: 1000
+    });
+    expect(result).toEqual({
+      id: 1,
+      name: "fridge",
+      price: 1000
+    });
+  });
+
+  it('index method should return a list of products', async () => {
+    const result = await productStore.index();
+    expect(result).toEqual([{
+      id: 1,
+      name: 'fridge',
+      price: 1000
+    }]);
+  });
+
+  it('show method should return the correct product', async () => {
+    const result = await productStore.show("1");
+    expect(result).toEqual({
+      id: 1,
+      name: 'fridge',
+      price: 1000
+    });
+  });
+
+});
+
+// User Model Testing
+const userStore = new UserStore()
+
+describe("User Model", () => {
+  it('should have an index method', () => {
+    expect(userStore.index).toBeDefined();
+  });
+
+
+  it('should have a create method', () => {
+    expect(userStore.create).toBeDefined();
+  });
+
+  it('create method should add a user', async () => {
+    
+    const result = await userStore.create({
+        firstname: "anas",
+        lastname: "hesham",
+        password: "password123"
+    });
+    expect(result).toEqual(jasmine.objectContaining({
+        id: 1,
+        firstname: "anas",
+        lastname: "hesham"
+    }));
+  });
+
+  it('index method should return a list of users', async () => {
+    const result = await userStore.index();
+    expect(result).toEqual([jasmine.objectContaining({
+        id: 1,
+        firstname: "anas",
+        lastname: "hesham"
+    })]);
+  });
+  it('show method should return the correct user', async () => {
+    const result = await userStore.show("1");
+    expect(result).toEqual(jasmine.objectContaining({
+      id: 1,
+      firstname: "anas",
+      lastname: "hesham"
+    }));
+  });
+
+});
+
+// Order Model Testing
+const orderStore = new OrderStore()
+
+describe("Order Model", () => {
+  it('should have a show method', () => {
+    expect(orderStore.show).toBeDefined();
+  });
+
+    it('show method should return the correct order', async () => {
+      expect(await orderStore.show("1")).not.toBeDefined();
+    });
+
+});
 
 // Testing the End Points
 const request = supertest(app);
