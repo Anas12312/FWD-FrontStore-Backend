@@ -2,7 +2,7 @@
 #### Products
 - Index "http://localhost:3000/products" [GET]
 - Show "http://localhost:3000/products/:id" [GET]
-- Create [token required] "http://localhost:3000/products" [POST]
+- Create "http://localhost:3000/products" [POST]
 
 #### Users
 - Index [token required] "http://localhost:3000/users" [GET]

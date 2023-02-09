@@ -48,7 +48,6 @@ the application has 7 endpoints:
 		lastname:"string",
 		password:"string"
 	}
-	this end point needs a jwt token to work
 	this endpoint return the created user and a new jwt
 5) the Index User Endpoint:
 	"/users" [GET]
